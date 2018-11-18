@@ -3,18 +3,20 @@ import '@/assets/js/messenger/build/js/messenger-theme-flat';
 
 declare const Messenger: any;
 
+Messenger.options = {
+    theme: 'air',
+    extraClasses: 'messenger-fixed messenger-on-top messenger-on-right',
+    hideAfter: 2,
+    hideOnNavigate: true
+};
+
 class Notifications {
     info(message: string) {
-        Messenger().info({
-            message: message,
-            theme: 'air',
-            extraClasses: 'messenger-fixed messenger-on-top messenger-on-right messenger-theme-air',
-            hideAfter: 120
-        });
+        Messenger().info(message);
     }
 
     error(message: string) {
-        Messenger().post({message, type: 'error', extraClasses: 'messenger-on-top'});
+        Messenger().error(message);
     }
 }
 

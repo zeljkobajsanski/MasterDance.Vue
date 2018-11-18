@@ -2,7 +2,7 @@ export class Member {
     id = 0;
     firstName = '';
     lastName = '';
-    dateOfBirth: Date = new Date();
+    dateOfBirth?: Date;
     image?: string;
     memberFrom?: Date;
     gender: Gender = Gender.Female;

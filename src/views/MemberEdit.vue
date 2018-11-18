@@ -1,68 +1,75 @@
 <template>
     <div>
-        <page-header title="Clan kluba"/>
+        <!--<page-header title="Clan kluba"/>-->
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <widget>
                     <form class="form-horizontal form-label-left" @submit.prevent="save">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="text-align-center">
-                                    <img class="img-circle" :src="member.image || 'img/2.png'" @click="showImageEditor" style="height: 112px;">
+                                    <img class="img-responsive" :src="member.image || 'img/2.png'" @click="showImageEditor()" style="height: 112px;">
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <h3 class="mt-sm mb-xs">{{member.firstName}} {{member.lastName}}</h3>
-                                <!--<address>-->
+                                <address>
                                     <!--<strong>Development manager</strong> at <strong><a href="#">Allexample Inc.</a></strong><br>-->
-                                    <!--<abbr title="Work email">e-mail:</abbr> <a href="mailto:#">maryna.gils@example.com</a><br>-->
-                                    <!--<abbr title="Work Phone">phone:</abbr> (123) 456-7890-->
-                                <!--</address>-->
+                                    <abbr title="Adresa">Adresa:</abbr> {{member.contactAddress}}<br>
+                                    <abbr title="Telefon">Telefon:</abbr> {{member.contactPhone}}<br>
+                                    <abbr title="Roditelj">Roditelj:</abbr> {{member.motherFirstName || member.fatherFirstName}} {{member.motherContactPhone || member.fatherContactPhone}}
+                                </address>
                             </div>
                         </div>
-                        <fieldset class="mt-sm">
-                            <legend>Podaci clana kluba </legend>
-                        </fieldset>
+                        <!--<fieldset class="mt-sm">-->
+                            <!--<legend>Podaci clana </legend>-->
+                        <!--</fieldset>-->
                         <fieldset>
                             <legend class="section">Licni Podaci</legend>
                             <!--<div class="form-group">-->
                                 <!--<label class="control-label col-sm-4" for="prefix">Prefix</label>-->
                                 <!--<div class="col-sm-4"><input type="text" id="prefix" name="prefix" class="form-control input-transparent"></div>-->
                             <!--</div>-->
-                            <div class="form-group">
+                            <div class="form-group" :class="{'has-error': errors.has('first-name')}">
                                 <label class="control-label col-sm-4" for="first-name">Ime <span class="required">*</span></label>
-                                <div class="col-sm-8"><input type="text" id="first-name" name="first-name" class="form-control input-transparent" v-model="member.firstName"></div>
+                                <div class="col-sm-8">
+                                    <input type="text" id="first-name" name="first-name"
+                                           class="form-control input-transparent" v-model="member.firstName" v-validate.immediate="'required'"></div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" :class="{'has-error': errors.has('last-name')}">
                                 <label class="control-label col-sm-4" for="last-name">Prezime <span class="required">*</span></label>
-                                <div class="col-sm-8"><input type="text" id="last-name" name="last-name" class="form-control input-transparent" v-model="member.lastName"></div>
+                                <div class="col-sm-8">
+                                    <input type="text" id="last-name" name="last-name" class="form-control input-transparent"
+                                           v-model="member.lastName" v-validate.immediate="'required'"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Pol</label>
-                                <div class="col-sm-8">
-                                    <div id="gender" class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            <input type="radio" name="gender" :value="Gender.Male" v-model="member.gender"> &nbsp; Decak &nbsp;
-                                        </label>
-                                        <label class="btn btn-primary active" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            <input type="radio" name="gender" :value="Gender.Female" v-model="member.gender"> Devojcica
-                                        </label>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-primary">
+                                        <input type="radio" id="female" name="gender" :value="Gender.Female" v-model="member.gender">
+                                        <label for="female"> Devojcica</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-primary">
+                                        <input type="radio" id="male" name="gender" :value="Gender.Male" v-model="member.gender">
+                                        <label for="male"> Decak</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" :class="{'has-error': errors.has('date-of-birth')}">
                                 <label class="control-label col-sm-4">Datum rodjenja <span class="required">*</span></label>
                                 <div class="col-sm-8">
                                     <date-picker class="date-picker form-control input-transparent"
                                                  :config="dateConfig"
-                                                 name="date-of-birth" v-model="member.dateOfBirth" /></div>
+                                                 name="date-of-birth" v-model="member.dateOfBirth" v-validate.immediate="'required'"/></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Clan od </label>
                                 <div class="col-sm-8">
                                     <date-picker class="date-picker form-control input-transparent"
                                                  :config="dateConfig"
-                                                 name="date-of-birth" v-model="member.memberFrom" /></div>
+                                                 name="date-of-birth" v-model="member.joinedDate" /></div>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -73,7 +80,7 @@
                                     <input id="address" type="text"
                                            data-trigger="change"
                                            class="form-control input-transparent"
-                                           name="address" v-model="member.address">
+                                           name="address" v-model="member.contactAddress">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -96,14 +103,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="father-lname" class="control-label col-sm-4">Prezime </label>
-                                <div class="col-xs-12 col-sm-8">
-                                    <input id="father-lname" class="form-control input-transparent  mask"
-                                           type="text"
-                                           name="fatherFirstName" v-model="member.fatherLastName">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="father-phone" class="control-label col-sm-4">Telefon </label>
                                 <div class="col-xs-12 col-sm-8">
                                     <input id="father-phone" class="form-control input-transparent  mask"
@@ -123,14 +122,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mother-lname" class="control-label col-sm-4">Prezime </label>
-                                <div class="col-xs-12 col-sm-8">
-                                    <input id="mother-lname" class="form-control input-transparent  mask"
-                                           type="text"
-                                           name="motherFirstName" v-model="member.motherLastName">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="mother-phone" class="control-label col-sm-4">Telefon </label>
                                 <div class="col-xs-12 col-sm-8">
                                     <input id="mother-phone" class="form-control input-transparent  mask"
@@ -143,7 +134,8 @@
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-4">
                                     <div class="btn-group">
-                                        <button type="submit" class="btn btn-primary">Potvrdi</button>
+                                        <router-link :to="{name: 'members'}" class="btn btn-success">Nazad</router-link>
+                                        <button type="submit" class="btn btn-primary" :disabled="errors.any() || isSaving">Potvrdi</button>
                                     </div>
                                 </div>
                             </div>
@@ -151,12 +143,38 @@
                     </form>
                 </widget>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <widget>
+                    <tabs>
+                        <tab title="Dokumenta">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>Tip dokumenta</td>
+                                        <td>Datum vazenja</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" @click="showAddDocumentDialog()">Dodaj</button>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="document in documents" :key="document.id">
+                                        <td>{{document.typeName}}</td>
+                                        <td>{{document.expirationDate || '-'}}</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </tab>
+                        <tab title="Nagrade">
+                            <p>Hello</p>
+                        </tab>
+                    </tabs>
                 </widget>
             </div>
         </div>
-        <image-edit-modal ref="imageEditor" />
+        <image-edit-modal ref="imageEditor" v-model="member.image"/>
+        <add-document-dialog ref="addDocumentDialog" :member="member" @saved="refreshDocuments()"></add-document-dialog>
     </div>
 </template>
 
@@ -168,15 +186,20 @@
     import apiProxy from '@/services/ApiProxy';
     import notifications from '@/services/Notifications';
     import ImageEditModal from '@/components/ImageEditModal.vue';
+    import Tabs from '@/components/common/Tabs.vue';
+    import Tab from '@/components/common/Tab.vue';
+    import AddDocumentDialog from '@/components/member-edit/AddDocumentDialog.vue';
 
 
-    @Component({components: {PageHeader, Widget, ImageEditModal}})
+    @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog}})
     export default class MemberEdit extends Vue {
         member = new Member();
         Gender = Gender;
+        isSaving = false;
+        documents = [];
 
         dateConfig = {
-            format: 'YYYY-MM-DD'
+            format: 'DD.MM.YYYY'
         };
 
         async created() {
@@ -184,28 +207,34 @@
             if (memberId) {
                 const {data} = await apiProxy.getMember(memberId);
                 this.member = data;
+                await this.refreshDocuments();
             }
         }
 
         async save() {
             try {
-                if (!this.member.id) {
-                    const {data} = await apiProxy.insertMember(this.member);
-                    this.member = data;
-                    notifications.info('Podaci su uspesno sacuvani');
-                } else {
-                    const {data} = await apiProxy.updateMember(this.member);
-                    notifications.info('Podaci su uspesno sacuvani');
-                }
+                this.isSaving = true;
+                const {data} = await apiProxy.saveMember(this.member);
+                this.member = data;
+                notifications.info('Podaci su uspesno sacuvani');
             } catch(e) {
-                notifications.error('Greska prilikom unosa podataka')
-                console.log(e.response.statusText);
+                notifications.error('Greska prilikom unosa podataka');
             }
+            this.isSaving = false;
 
         }
 
         showImageEditor() {
             (<ImageEditModal>this.$refs['imageEditor']).show();
+        }
+
+        showAddDocumentDialog() {
+            (<AddDocumentDialog>this.$refs['addDocumentDialog']).show();
+        }
+
+        async refreshDocuments() {
+            const {data} = await apiProxy.getDocuments(this.member.id);
+            this.documents = data;
         }
     }
 </script>

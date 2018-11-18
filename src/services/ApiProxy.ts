@@ -2,12 +2,8 @@ import axios from 'axios';
 import {Member} from "@/types";
 
 class ApiProxy {
-    insertMember(member: Member) {
+    saveMember(member: Member) {
         return axios.post('/api/members', member);
-    }
-
-    updateMember(member: Member) {
-        return axios.put(`/api/members/${member.id}`, member);
     }
 
     getMembers() {
@@ -16,6 +12,22 @@ class ApiProxy {
 
     getMember(id: number) {
         return axios.get(`/api/members/${id}`);
+    }
+
+    getDocumentTypes() {
+        return axios.get('/api/documents/GetDocumentTypes');
+    }
+
+    saveDocument(memberId: string, data: FormData) {
+        return axios({
+            url: `/api/members/${memberId}/documents`,
+            method: 'POST',
+            data: data
+        });
+    }
+
+    getDocuments(memberId) {
+        return axios.get(`/api/members/${memberId}/documents`);
     }
 }
 

@@ -7,14 +7,16 @@ import MemberEdit from '@/views/MemberEdit.vue';
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-      {path: '/members', name: 'members', component: Members},
-      {path: '/members/:id?/details', name: 'member-edit', component: MemberEdit},
-      {path: '/members/create', name: 'member-edit', component: MemberEdit}
-  ]
+    linkActiveClass: 'active',
+    routes: [
+        {
+            path: '/home',
+            name: 'home',
+            component: Home
+        },
+        {path: '/', redirect: '/home'},
+        {path: '/members', name: 'members', component: Members},
+        {path: '/members/:id?/details', name: 'member-edit', component: MemberEdit},
+        {path: '/members/create', name: 'member-edit', component: MemberEdit}
+    ]
 })

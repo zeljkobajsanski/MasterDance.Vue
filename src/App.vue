@@ -1,17 +1,29 @@
 <template>
     <div id="app">
         <div class="logo">
-            <h4><a href="index.html">Light <strong>Blue</strong></a></h4>
+            <h4>
+                <router-link to="/">
+                    <img src="/img/logo.png" />
+                </router-link>
+            </h4>
         </div>
         <nav id="sidebar" class="sidebar nav-collapse collapse">
             <ul id="side-nav" class="side-nav">
-                <li class="active">
-                    <a href="index.html"><i class="fa fa-home"></i> <span class="name">Dashboard</span></a>
-                </li>
-                <li class="">
-                    <a href="package.html"><i class="fa fa-database"></i> <span class="name">LB Package <sup
-                            class="text-warning fw-bold">4.0</sup></span></a>
-                </li>
+                <router-link tag="li" :to="{name: 'home'}">
+                    <a><i class="fa fa-home"></i> <span class="name">Home</span></a>
+                </router-link>
+                <router-link :to="{name: 'members'}" tag="li">
+                    <a><i class="fa fa-users"></i> <span class="name">Clanovi
+                        <sup class="text-warning fw-bold"> New</sup></span>
+                    </a>
+                </router-link>
+                <router-link :to="{name: 'schedule'}" tag="li">
+                    <a><i class="fa fa-calendar"></i>
+                        <span class="name">Raspored
+                            <!--<sup class="text-warning fw-bold"> New</sup>-->
+                        </span>
+                    </a>
+                </router-link>
             </ul>
         </nav>
         <div class="wrap">
