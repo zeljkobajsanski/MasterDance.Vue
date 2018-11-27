@@ -29,7 +29,8 @@
     import {Vue, Component, Prop, Emit} from 'vue-property-decorator';
     import ModalDialog from '@/components/common/ModalDialog.vue';
     import apiProxy from '@/services/ApiProxy';
-    import * as moment from "moment";
+
+    import moment from "moment";
 
     @Component({components: {ModalDialog}})
     export default class AddDocumentDialog extends Vue {

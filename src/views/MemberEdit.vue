@@ -147,24 +147,7 @@
                 <widget>
                     <tabs>
                         <tab title="Dokumenta">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <td>Tip dokumenta</td>
-                                        <td>Datum vazenja</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" @click="showAddDocumentDialog()">Dodaj</button>
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="document in documents" :key="document.id">
-                                        <td>{{document.typeName}}</td>
-                                        <td>{{document.expirationDate || '-'}}</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <documents-table :documents="documents" :member="member"></documents-table>
                         </tab>
                         <tab title="Nagrade">
                             <p>Hello</p>
@@ -174,7 +157,6 @@
             </div>
         </div>
         <image-edit-modal ref="imageEditor" v-model="member.image"/>
-        <add-document-dialog ref="addDocumentDialog" :member="member" @saved="refreshDocuments()"></add-document-dialog>
     </div>
 </template>
 
@@ -189,9 +171,10 @@
     import Tabs from '@/components/common/Tabs.vue';
     import Tab from '@/components/common/Tab.vue';
     import AddDocumentDialog from '@/components/member-edit/AddDocumentDialog.vue';
+    import documentsTable from '@/components/member-edit/DocumentsTable.vue';
 
 
-    @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog}})
+    @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog, documentsTable}})
     export default class MemberEdit extends Vue {
         member = new Member();
         Gender = Gender;
@@ -226,10 +209,6 @@
 
         showImageEditor() {
             (<ImageEditModal>this.$refs['imageEditor']).show();
-        }
-
-        showAddDocumentDialog() {
-            (<AddDocumentDialog>this.$refs['addDocumentDialog']).show();
         }
 
         async refreshDocuments() {

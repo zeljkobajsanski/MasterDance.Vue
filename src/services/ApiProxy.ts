@@ -29,6 +29,10 @@ class ApiProxy {
     getDocuments(memberId) {
         return axios.get(`/api/members/${memberId}/documents`);
     }
+
+    getDocument(id) {
+        return axios.get(`/api/documents/${id}`);
+    }
 }
 
 const instance = new ApiProxy();
