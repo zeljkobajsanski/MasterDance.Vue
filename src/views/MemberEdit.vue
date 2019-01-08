@@ -17,7 +17,7 @@
                                     <!--<strong>Development manager</strong> at <strong><a href="#">Allexample Inc.</a></strong><br>-->
                                     <abbr title="Adresa">Adresa:</abbr> {{member.contactAddress}}<br>
                                     <abbr title="Telefon">Telefon:</abbr> {{member.contactPhone}}<br>
-                                    <abbr title="Roditelj">Roditelj:</abbr> {{member.motherFirstName || member.fatherFirstName}} {{member.motherContactPhone || member.fatherContactPhone}}
+                                    <abbr title="Roditelj">Roditelj:</abbr> {{parent}}
                                 </address>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-4">
                                     <div class="btn-group">
-                                        <router-link :to="{name: 'members'}" class="btn btn-success">Nazad</router-link>
+                                        <router-link :to="{name: 'members'}" class="btn btn-success">Lista clanova</router-link>
                                         <button type="submit" class="btn btn-primary" :disabled="errors.any() || isSaving">Potvrdi</button>
                                     </div>
                                 </div>
@@ -150,7 +150,16 @@
                             <documents-table :documents="documents" :member="member"></documents-table>
                         </tab>
                         <tab title="Nagrade">
-                            <p>Hello</p>
+                            <widget>
+                                <div slot="actions">
+                                    <button class="btn btn-danger" @click="addPrize">Dodaj nagradu</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <prizes :memberId="member.id" class="mt-lg" ref="prizes"/>
+                            </widget>
+                        </tab>
+                        <tab title="Clanarina">
+                            <memberships :memberId="member.id" />
                         </tab>
                     </tabs>
                 </widget>
@@ -172,9 +181,11 @@
     import Tab from '@/components/common/Tab.vue';
     import AddDocumentDialog from '@/components/member-edit/AddDocumentDialog.vue';
     import documentsTable from '@/components/member-edit/DocumentsTable.vue';
+    import prizes from '@/components/member-edit/Prizes.vue'
+    import Memberships from '@/components/member-edit/Memberships.vue'
 
 
-    @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog, documentsTable}})
+    @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog, documentsTable, prizes, Memberships}})
     export default class MemberEdit extends Vue {
         member = new Member();
         Gender = Gender;
@@ -214,6 +225,19 @@
         async refreshDocuments() {
             const {data} = await apiProxy.getDocuments(this.member.id);
             this.documents = data;
+        }
+
+        get parent() {
+            if (this.member.motherFirstName) {
+                return `${this.member.motherFirstName} ${this.member.motherContactPhone}`
+            } else if (this.member.fatherFirstName) {
+                return `${this.member.fatherFirstName} ${this.member.fatherContactPhone}`
+            }
+            return '-';
+        }
+
+        addPrize() {
+            (<prizes>this.$refs.prizes).addPrize();
         }
     }
 </script>

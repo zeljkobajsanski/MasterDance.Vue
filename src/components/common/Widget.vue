@@ -38,5 +38,7 @@
 </script>
 
 <style scoped>
-
+    .widget {
+        min-height: 28px;
+    }
 </style>

@@ -3,8 +3,10 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Members from '@/views/Members.vue';
 import MemberEdit from '@/views/MemberEdit.vue';
+import Competitions from '@/views/Competitions.vue';
+import BalanceSheet from '@/views/BalanceSheet.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     linkActiveClass: 'active',
@@ -17,6 +19,8 @@ export default new Router({
         {path: '/', redirect: '/home'},
         {path: '/members', name: 'members', component: Members},
         {path: '/members/:id?/details', name: 'member-edit', component: MemberEdit},
-        {path: '/members/create', name: 'member-edit', component: MemberEdit}
+        {path: '/members/create', name: 'member-edit', component: MemberEdit},
+        {path: '/competitions', name: 'competitions', component: Competitions},
+        {path: '/balance', name: 'balance', component: BalanceSheet},
     ]
 })

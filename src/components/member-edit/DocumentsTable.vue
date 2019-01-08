@@ -4,30 +4,33 @@
         <modal-dialog ref="documentPreview" title="Pregled dokumenta">
             <object :data="previewDocumentUrl" width="100%" height="600"></object>
         </modal-dialog>
-        <table class="table">
-            <thead>
-            <tr>
-                <td>Tip dokumenta</td>
-                <td>Datum vazenja</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" @click="showAddDocumentDialog()">Dodaj</button>
-                </td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="document in documentList" :key="document.id">
-                <td>{{document.typeName}}</td>
-                <td>{{document.expirationDate || '-'}}</td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn btn-xs btn-inverse" title="Pregledaj" @click="preview(document.id)"><i class="fa fa-search"></i> </button>
-                        <button class="btn btn-xs btn-inverse" title="Preuzmi" @click="download(document.id)"><i class="fa fa-download"></i> </button>
-                        <button class="btn btn-xs btn-inverse" title="Obrisi"><i class="fa fa-trash"></i> </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <widget>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Tip dokumenta</th>
+                    <th>Datum vazenja</th>
+                    <th>
+                        <button class="btn btn-danger btn-sm" @click="showAddDocumentDialog()">Dodaj dokument</button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="document in documentList" :key="document.id">
+                    <td>{{document.typeName}}</td>
+                    <td>{{document.expirationDate || '-'}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-xs btn-inverse" title="Pregledaj" @click="preview(document.id)"><i class="fa fa-search"></i> </button>
+                            <button class="btn btn-xs btn-inverse" title="Preuzmi" @click="download(document.id)"><i class="fa fa-download"></i> </button>
+                            <button class="btn btn-xs btn-inverse" title="Obrisi" @click="deleteDocument(document)"><i class="fa fa-trash"></i> </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </widget>
+
         <a :href="documentUrl" :download="fileName" ref="downloadLink"></a>
     </div>
 
@@ -40,8 +43,9 @@
     import AddDocumentDialog from '@/components/member-edit/AddDocumentDialog.vue';
     import ModalDialog from '@/components/common/ModalDialog.vue';
     import {Member} from "../../types";
+    import Widget from "@/components/common/Widget.vue";
 
-    @Component({components: {AddDocumentDialog, ModalDialog}})
+    @Component({components: {Widget, AddDocumentDialog, ModalDialog}})
     export default class DocumentsTable extends Vue {
         @Prop({default: () => []}) documents!: any[];
         @Prop() member: Member;
@@ -80,6 +84,14 @@
             this.$nextTick(() => {
                 (<ModalDialog>this.$refs['documentPreview']).open();
             });
+        }
+
+        async deleteDocument(document) {
+            try {
+                const {data} = await apiProxy.deleteDocument(0, document.id);
+                this.documentList = data;
+            } catch(err) {
+            }
         }
     }
 </script>

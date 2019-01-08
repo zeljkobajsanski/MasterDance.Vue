@@ -5,7 +5,7 @@ declare const Messenger: any;
 
 Messenger.options = {
     theme: 'air',
-    extraClasses: 'messenger-fixed messenger-on-top messenger-on-right',
+    extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
     hideAfter: 2,
     hideOnNavigate: true
 };

@@ -15,7 +15,7 @@ module.exports = {
                 target: 'http://localhost:5000',
                 changeOrigin: true
             },
-            '/Documents': {
+            '/Documents/*': {
                 target: 'http://localhost:5000',
                 changeOrigin: true
             }

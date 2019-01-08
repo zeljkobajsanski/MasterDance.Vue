@@ -2,15 +2,16 @@
     <div>
         <!--<page-header title="Clanovi"></page-header>-->
         <widget>
-            <template slot="actions">
+            <div slot="actions">
                 <router-link class="btn btn-danger btn-sm" :to="{name: 'member-edit'}">Kreiraj</router-link>
-            </template>
-            <div class="row">
+            </div>
+            <div class="clearfix"></div>
+            <div class="row mt-lg">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="row thumbnails">
-                                <li class="col-sm-2" v-for="member in members" :key="member.id">
+                                <li class="col-sm-3" v-for="member in members" :key="member.id">
                                     <div class="thumbnail">
                                         <img :src="member.image || 'img/2.png'" alt="">
                                         <div class="caption">

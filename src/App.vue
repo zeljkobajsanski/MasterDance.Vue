@@ -13,17 +13,30 @@
                     <a><i class="fa fa-home"></i> <span class="name">Home</span></a>
                 </router-link>
                 <router-link :to="{name: 'members'}" tag="li">
-                    <a><i class="fa fa-users"></i> <span class="name">Clanovi
-                        <sup class="text-warning fw-bold"> New</sup></span>
+                    <a><i class="fa fa-users"></i> <span class="name">Clanovi</span>
                     </a>
                 </router-link>
-                <router-link :to="{name: 'schedule'}" tag="li">
+                <router-link :to="{name: 'competitions'}" tag="li">
                     <a><i class="fa fa-calendar"></i>
-                        <span class="name">Raspored
+                        <span class="name">Takmicenja
                             <!--<sup class="text-warning fw-bold"> New</sup>-->
                         </span>
                     </a>
                 </router-link>
+                <router-link :to="{name: 'balance'}" tag="li">
+                    <a><i class="fa fa-money"></i>
+                        <span class="name">Uplate
+                            <!--<sup class="text-warning fw-bold"> New</sup>-->
+                        </span>
+                    </a>
+                </router-link>
+               <!-- <router-link :to="{name: 'schedule'}" tag="li">
+                    <a><i class="fa fa-calendar"></i>
+                        <span class="name">Raspored
+                            &lt;!&ndash;<sup class="text-warning fw-bold"> New</sup>&ndash;&gt;
+                        </span>
+                    </a>
+                </router-link>-->
             </ul>
         </nav>
         <div class="wrap">
@@ -202,14 +215,6 @@
                     <form id="search-form" class="navbar-form pull-right" role="search">
                         <input type="search" class="form-control search-query" placeholder="Search...">
                     </form>
-                    <div class="notifications pull-right">
-                        <div class="alert pull-right">
-                            <a href="#" class="close ml-xs" data-dismiss="alert">&times;</a>
-                            <i class="fa fa-info-circle mr-xs"></i> Check out Light Blue <a id="notification-link"
-                                                                                            href="#">settings</a> on the
-                            right!
-                        </div>
-                    </div>
                 </div>
             </header>
             <div class="content container">
@@ -225,5 +230,37 @@
     </div>
 </template>
 
+<script lang="ts">
+import {Vue, Component, Watch} from 'vue-property-decorator'
+import {State, Mutation, Action} from 'vuex-class'
+import Notifications from '@/services/Notifications'
+
+@Component({})
+export default class extends Vue {
+    @Mutation setCompetitions;
+    @Action getCompetitions;
+
+    async created() {
+        await this.getCompetitions();
+    }
+}
+</script>
+
+
 <style>
+    body, label, input, button, select, textarea, .radio label, .checkbox label {
+        font-weight: 100;
+    }
+
+    .btn {
+        font-weight: 300;
+    }
+
+    ul.messenger-theme-air .messenger-message  {
+        font-weight: 200;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
 </style>
