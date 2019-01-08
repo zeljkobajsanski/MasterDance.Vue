@@ -20,7 +20,7 @@
                 </td>
                 <!--<td>{{i.totalAmount}}</td>-->
                 <!--<td>{{i.totalPaid}}</td>-->
-                <td :class="{'text-danger': i.balance < 0}">{{i.balance}}</td>
+                <td :class="{'text-danger': i.balance < 0}">{{i.balance | money}}</td>
             </tr>
             </tbody>
         </table>

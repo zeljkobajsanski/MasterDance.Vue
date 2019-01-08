@@ -10,7 +10,7 @@
                     <td>Ime clana</td>
                     <td>Vrsta upozorenja</td>
                     <td>Datum isteka</td>
-                    <td>Broj dana</td>
+                    <td>Rok</td>
                 </tr>
             </thead>
             <tbody>

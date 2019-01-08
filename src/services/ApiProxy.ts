@@ -81,6 +81,10 @@ class ApiProxy {
     getNotifications() {
         return axios.get('/api/members/GetExpiringDocuments');
     }
+
+    getStats() {
+        return axios.get('/api/dashboard');
+    }
 }
 
 const instance = new ApiProxy();

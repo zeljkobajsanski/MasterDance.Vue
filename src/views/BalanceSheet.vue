@@ -14,9 +14,9 @@
                     <td>
                         <router-link :to="{name: 'member-edit', params: {id: i.memberId}}">{{i.member}}</router-link>
                     </td>
-                    <td>{{i.totalAmount}}</td>
-                    <td>{{i.totalPaid}}</td>
-                    <td :class="{'text-danger': i.balance < 0}">{{i.balance}}</td>
+                    <td>{{i.totalAmount | money}}</td>
+                    <td>{{i.totalPaid | money}}</td>
+                    <td :class="{'text-danger': i.balance < 0}">{{i.balance | money}}</td>
                 </tr>
             </tbody>
         </table>
