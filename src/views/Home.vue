@@ -48,7 +48,7 @@ export default class Home extends Vue {
     async created() {
         const {data} = await api.getStats();
         this.totalMembers = data.members;
-        this.totalDebt = data.debt;
+        this.totalDebt = data.debit;
         this.profit = data.profit;
     }
 }

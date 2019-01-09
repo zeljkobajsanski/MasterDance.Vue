@@ -17,6 +17,7 @@ export class Member {
     motherLastName?: string;
     motherContactPhone?: string;
     isActive: boolean = true;
+    memberGroupId?: number = null;
 }
 
 export enum Gender {

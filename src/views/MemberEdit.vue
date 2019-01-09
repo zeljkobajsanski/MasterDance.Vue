@@ -65,6 +65,15 @@
                                                  name="date-of-birth" v-model="member.dateOfBirth" v-validate.immediate="'required'"/></div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-sm-4">Pripada grupi </label>
+                                <div class="col-sm-8">
+                                    <select class="form-control input-transparent" v-model="member.memberGroupId">
+                                        <option value="">-</option>
+                                        <option v-for="g in memberGroups" :value="g.id">{{g.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-sm-4">Clan od </label>
                                 <div class="col-sm-8">
                                     <date-picker class="date-picker form-control input-transparent"
@@ -183,10 +192,12 @@
     import documentsTable from '@/components/member-edit/DocumentsTable.vue';
     import prizes from '@/components/member-edit/Prizes.vue'
     import Memberships from '@/components/member-edit/Memberships.vue'
+    import {State} from "vuex-class";
 
 
     @Component({components: {PageHeader, Widget, ImageEditModal, Tabs, Tab, AddDocumentDialog, documentsTable, prizes, Memberships}})
     export default class MemberEdit extends Vue {
+        @State memberGroups;
         member = new Member();
         Gender = Gender;
         isSaving = false;

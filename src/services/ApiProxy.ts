@@ -85,6 +85,18 @@ class ApiProxy {
     getStats() {
         return axios.get('/api/dashboard');
     }
+
+    getMemberGroups() {
+        return axios.get('/api/memberGroups');
+    }
+
+    saveMemberGroup(memberGroup) {
+        return axios.post('/api/memberGroups', memberGroup);
+    }
+
+    removeMemberGroup(id) {
+        return axios.delete(`/api/memberGroups/${id}`);
+    }
 }
 
 const instance = new ApiProxy();

@@ -12,8 +12,12 @@
                 <router-link tag="li" :to="{name: 'home'}">
                     <a><i class="fa fa-home"></i> <span class="name">Home</span></a>
                 </router-link>
+                <router-link :to="{name: 'groups'}" tag="li">
+                    <a><i class="fa fa-users"></i> <span class="name">Grupe</span>
+                    </a>
+                </router-link>
                 <router-link :to="{name: 'members'}" tag="li">
-                    <a><i class="fa fa-users"></i> <span class="name">Clanovi</span>
+                    <a><i class="fa fa-user"></i> <span class="name">Clanovi</span>
                     </a>
                 </router-link>
                 <router-link :to="{name: 'competitions'}" tag="li">
@@ -239,9 +243,11 @@ import Notifications from '@/services/Notifications'
 export default class extends Vue {
     @Mutation setCompetitions;
     @Action getCompetitions;
+    @Action getMemberGroups;
 
     async created() {
         await this.getCompetitions();
+        await this.getMemberGroups();
     }
 }
 </script>
